@@ -5,7 +5,7 @@ import useFetch from '../../../hooks/useFetch'
 const Trending = () => {
     const [endpoint, setEndpoint] = useState("day");
 
-    const { data, loading } = useFetch(`/trending/movie/${endpoint}`);
+    const { data, loading } = useFetch(`/trending/all/${endpoint}`);
 
     const onTabChange = (tab) => {
         setEndpoint(tab === "Day" ? "day" : "week");

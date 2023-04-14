@@ -11,7 +11,7 @@ import PosterFallback from "../../assets/no-poster.png";
 import './carousel.scss'
 
 
-const Carousel = ({ data, loading }) => {
+const Carousel = ({ data, loading, endpoint }) => {
 
   const carouselRef = useRef(null);
   const { url } = useSelector(state => state.homepage)
@@ -49,7 +49,7 @@ const Carousel = ({ data, loading }) => {
             {data?.map((item) => {
               const posterUrl = item.poster_path ? url.poster + item.poster_path : PosterFallback;
               return (
-                <div className="carouselItem" key={item.id} onClick={() => navigate(`/${item.media_type}/${item.id}`)}>
+                <div className="carouselItem" key={item.id} onClick={() => navigate(`/${item?.media_type || endpoint}/${item.id}`)}>
                   <div className="posterBlock">
                     <LazyLoad src={posterUrl}></LazyLoad>
                     <Rating rating={item.vote_average.toFixed(1)} />
