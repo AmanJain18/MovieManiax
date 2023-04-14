@@ -6,7 +6,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import dayjs from "dayjs";
-import { ContentWrapper, LazyLoad, Rating } from '../../components'
+import { ContentWrapper, LazyLoad, Rating, Genres } from '../../components'
 import PosterFallback from "../../assets/no-poster.png";
 import './carousel.scss'
 
@@ -18,11 +18,12 @@ const Carousel = ({ data, loading }) => {
   const navigate = useNavigate();
 
   const navigateTo = (dir) => {
-    if (dir === "left") {
-      carouselRef.current.scrollLeft -= 200;
-    } else {
-      carouselRef.current.scrollLeft += 200;
-    }
+    const container = carouselRef.current;
+    const scrollValue = dir === "left" ? container.scrollLeft - (container.offsetWidth + 20) : container.scrollLeft + (container.offsetWidth + 20);
+    container.scrollTo({
+      left: scrollValue,
+      behavior: "smooth"
+    })
   }
 
   const skeletonItem = () => {
@@ -48,10 +49,11 @@ const Carousel = ({ data, loading }) => {
             {data?.map((item) => {
               const posterUrl = item.poster_path ? url.poster + item.poster_path : PosterFallback;
               return (
-                <div className="carouselItem" key={item.id} >
+                <div className="carouselItem" key={item.id} onClick={() => navigate(`/${item.media_type}/${item.id}`)}>
                   <div className="posterBlock">
                     <LazyLoad src={posterUrl}></LazyLoad>
                     <Rating rating={item.vote_average.toFixed(1)} />
+                    <Genres data={item.genre_ids.slice(0, 2)} />
                   </div>
                   <div className="textBlock">
                     <span className="title">
