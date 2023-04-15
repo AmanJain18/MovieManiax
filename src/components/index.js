@@ -7,3 +7,5 @@ export { default as Carousel } from "./carousel/Carousel";
 export { default as Rating } from "./ratings/Ratings";
 export { default as Genres } from "./genres/Genres";
 export { default as VideoPopup } from "./videoPopup/VideoPopup";
+export { default as MovieCard } from "./movieCard/MovieCard";
+export { default as Spinner } from "./spinner/Spinner";
