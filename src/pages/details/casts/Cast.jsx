@@ -27,7 +27,7 @@ const Cast = ({ data, loading }) => {
                             return (
                                 <div className="listItem" key={item.id}>
                                     <div className="profileImg">
-                                        <img src={urlImg} alt="" />
+                                        <LazyLoad src={urlImg} alt="" />
                                     </div>
                                     <div className="name">{item.name}</div>
                                     <div className="character">{item.character}</div>

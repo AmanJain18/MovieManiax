@@ -4,10 +4,9 @@ import { useSelector } from "react-redux";
 import "./detailsBanner.scss";
 import dayjs from "dayjs";
 import useFetch from "../../../hooks/useFetch";
-import { ContentWrapper, Genres, LazyLoad, Rating } from "../../../components";
+import { ContentWrapper, Genres, LazyLoad, Rating, VideoPopup } from "../../../components";
 import { PlayBtn } from "../PlayBtn";
 import PosterFallback from "../../../assets/no-poster.png";
-import VideoPopup from "../../../components/videoPopup/VideoPopup";
 
 const DetailsBanner = ({ video, crew }) => {
 

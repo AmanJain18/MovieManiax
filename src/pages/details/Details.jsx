@@ -4,7 +4,7 @@ import useFetch from '../../hooks/useFetch'
 import "./details.scss"
 import DetailsBanner from './detailsBanner/DetailsBanner'
 import Cast from './casts/Cast'
-// import Videos from './videos/Videos'
+import VideosSection from './videosSection/VideosSection'
 
 
 const Details = () => {
@@ -15,6 +15,7 @@ const Details = () => {
     <div>
       <DetailsBanner video={data?.results} crew={credits?.crew} />
       <Cast data={credits?.cast} loading={creditsLoading} />
+      <VideosSection data={data?.results} loading={loading} />
     </div>
   )
 }
