@@ -4,7 +4,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import Select from "react-select";
 import "./explore.scss";
 import useFetch from "../../hooks/useFetch";
-import { fetchData } from "../../utils/api";
+import {  fetchData } from "../../utils/api";
 import { ContentWrapper, MovieCard, Spinner } from "../../components";
 
 let filters = {};
@@ -70,11 +70,11 @@ const Explore = () => {
   const onChange = (selectedItems, action) => {
     if (action.name === "sortby") {
       setSortby(selectedItems);
-      if (action.action !== "clear") {
-        filters.sort_by = selectedItems.value;
-      } else {
-        delete filters.sort_by;
-      }
+        if (action.action !== "clear") {
+          filters.sort_by = selectedItems.value;
+        } else {
+          delete filters.sort_by;
+        }
     }
 
     if (action.name === "genres") {
