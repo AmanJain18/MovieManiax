@@ -25,6 +25,22 @@ body:
     validations:
       required: true
   - type: textarea
+    id: currentBehavior
+    attributes:
+      label: "Current behaviour"
+      description: What happens, e.g. "The price shown on the button is £400"
+      placeholder: Short and explicit description of current senario...
+    validations:
+      required: true
+  - type: textarea
+    id: expectedBehaviour
+    attributes:
+      label: "Expected behaviour"
+      description: What should happen, e.g. "The price shown on the button is £4"
+      placeholder: Short and explicit description of what should happen...
+    validations:
+      required: true
+  - type: textarea
     id: reprod
     attributes:
       label: "Reproduction steps"
@@ -43,7 +59,7 @@ body:
       label: "Screenshots"
       description: If applicable, add screenshots to help explain your problem.
       value: |
-        ![DESCRIPTION](LINK.png)
+        ![DESCRIPTION](LINK.png)  
       render: bash
     validations:
       required: false
@@ -99,5 +115,3 @@ body:
       options:
         - label: I have read and agree to the [CONTRIBUTING GUIDELINES](https://github.com/amupedia2021/Project-Amupedia/blob/master/CONTRIBUTING.md) of this project.
           required: true
-
-      
