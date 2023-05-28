@@ -37,6 +37,3 @@ jobs:
             await github.issues.addLabels(addLabelParams);
             
             console.log(`Added tags GSSoC2023 to issue #${issueNumber}.`);
-            } else {
-              console.log('No tags to add.');
-            }
