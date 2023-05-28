@@ -1,18 +1,20 @@
-name: Add label to Issues
+name: Add label to Issues/PRs
 
 on:
   issues:
-    types: [opened]
+    types:
+      - opened
+  pull_request:
+    types:
+      - opened
 
 jobs:
   add-label:
     runs-on: ubuntu-latest
     permissions:
       issues: write
-
-    strategy:
-      matrix:
-        template: ['bug_report.yml']
+      pull-requests: write
+      contents: read
 
     steps:
       - name: Checkout repository
@@ -23,7 +25,8 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const issueNumber = context.issue.number;
+            const { issue, pull_request } = context.payload;
+            const issueNumber = issue ? issue.number : pull_request.number;
             const repo = context.repo.owner + '/' + context.repo.repo;
             const label = 'GSSoC2023';
 
@@ -36,4 +39,4 @@ jobs:
 
             await github.issues.addLabels(addLabelParams);
             
-            console.log(`Added tags GSSoC2023 to issue #${issueNumber}.`);
+            console.log(`Added tags GSSoC2023 to issue/PR #${issueNumber}.`);
