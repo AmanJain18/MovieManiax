@@ -1,11 +1,11 @@
-name: Issue labeler
+name: Add label to Issues
 
 on:
   issues:
     types: [opened]
 
 jobs:
-  label-issues-policy:
+  add-label:
     runs-on: ubuntu-latest
     permissions:
       issues: write
@@ -15,10 +15,11 @@ jobs:
         template: ['bug_report.yml']
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
       - name: Set labels based on policy
-        uses: redhat-plumbers-in-action/advanced-issue-labeler@main
+        uses: actions/github-script@v4
         with:
           template: ${{ matrix.template }}
           token: ${{ secrets.GITHUB_TOKEN }}
