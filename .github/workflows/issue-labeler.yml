@@ -1,7 +1,8 @@
 name: Issue labeler
+
 on:
   issues:
-    types: [ opened ]
+    types: [opened]
 
 jobs:
   label-issues-policy:
@@ -11,20 +12,31 @@ jobs:
 
     strategy:
       matrix:
-        template: [ bug_report.yml, feature.yml ]
+        template: ['bug_report.yml']
 
     steps:
       - uses: actions/checkout@v3
 
-      - name: Parse issue form
-        uses: stefanbuck/github-issue-parser@v2
-        id: issue-parser
-        with:
-          template-path: .github/ISSUE_TEMPLATE/${{ matrix.template }}
-
       - name: Set labels based on policy
         uses: redhat-plumbers-in-action/advanced-issue-labeler@main
         with:
-          issue-form: ${{ steps.issue-parser.outputs.jsonString }}
           template: ${{ matrix.template }}
           token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Add label
+        uses: actions/github-script@v4
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const issueNumber = context.issue.number;
+            const repo = context.repo.owner + '/' + context.repo.repo;
+            const label = 'GSSoC2023';
+
+            const addLabelParams = {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issueNumber,
+              labels: [label]
+            };
+
+            await github.issues.addLabels(addLabelParams);
