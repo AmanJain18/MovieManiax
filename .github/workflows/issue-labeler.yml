@@ -17,8 +17,26 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Set labels based on policy
+        uses: redhat-plumbers-in-action/advanced-issue-labeler@main
+        with:
+          template: ${{ matrix.template }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Add label 'GSSoC2023'
-        run: |
-          gh issue label add ${{ github.repository }} ${{ github.event.issue.number }} GSSoC2023
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: actions/github-script@v4
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const issueNumber = context.issue.number;
+            const repo = context.repo.owner + '/' + context.repo.repo;
+            const label = 'GSSoC2023';
+
+            const addLabelParams = {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issueNumber,
+              labels: [label]
+            };
+
+            await github.issues.addLabels(addLabelParams);
