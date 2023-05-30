@@ -28,7 +28,7 @@ jobs:
             const { issue, pull_request } = context.payload;
             const issueNumber = issue ? issue.number : pull_request.number;
             const repo = context.repo.owner + '/' + context.repo.repo;
-            const label = 'GSSoC2023';
+            const label = 'gssoc23';
 
             const addLabelParams = {
               owner: context.repo.owner,
