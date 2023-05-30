@@ -97,6 +97,15 @@ body:
         - Mac
     validations:
       required: false
+  - type: dropdown
+    id: contribution
+    attributes:
+      label: Are you contributing for a program ?
+      options:
+        - GSSoC2023
+        - Other
+    validations:
+      required: true
   - type: checkboxes
     id: terms
     attributes:

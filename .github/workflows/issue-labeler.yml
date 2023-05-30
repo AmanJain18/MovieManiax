@@ -1,42 +1,31 @@
-name: Add label to Issues/PRs
+name: Issue labeler
 
 on:
   issues:
-    types:
-      - opened
-  pull_request:
-    types:
-      - opened
+    types: [opened]
 
 jobs:
-  add-label:
+  label-issues-policy:
     runs-on: ubuntu-latest
     permissions:
       issues: write
-      pull-requests: write
-      contents: read
+
+    strategy:
+      matrix:
+        template: [bug_report.yml, feature.yml, doc.yml]
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
-      - name: Add label 'GSSoC2023'
-        uses: actions/github-script@v4
+      - name: Parse issue form
+        uses: stefanbuck/github-issue-parser@v2
+        id: issue-parser
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const { issue, pull_request } = context.payload;
-            const issueNumber = issue ? issue.number : pull_request.number;
-            const repo = context.repo.owner + '/' + context.repo.repo;
-            const label = 'gssoc23';
+          template-path: .github/ISSUE_TEMPLATE/${{ matrix.template }}
 
-            const addLabelParams = {
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: issueNumber,
-              labels: [label]
-            };
-
-            await github.issues.addLabels(addLabelParams);
-            
-            console.log(`Added tags GSSoC2023 to issue/PR #${issueNumber}.`);
+      - name: Set labels based on policy
+        uses: redhat-plumbers-in-action/advanced-issue-labeler@main
+        with:
+          issue-form: ${{ steps.issue-parser.outputs.jsonString }}
+          template: ${{ matrix.template }}
+          token: ${{ secrets.GITHUB_TOKEN }}

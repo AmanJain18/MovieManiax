@@ -2,10 +2,11 @@
 ---
 
 policy:
-  - template: ['bug_report.yml']
+  - template: ['bug_report.yml', 'feature.yml', 'doc.yml']
     section:
       - id: ['contribution']
         block-list: ['Other']
         label:
           - name: 'gssoc23'
-            keys: ['gssoc23']
+            keys: ['GSSoc23']
+
