@@ -1,0 +1,36 @@
+name: Add Comment to Newly Open Issue
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  add-comment:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Add Comment
+        uses: actions/github-script@v4
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const { issue } = context.payload;
+            const author = issue.user.login;
+            const issueNumber = issue.number;
+            const comment = `Hello @${author}! Thank you for raising this issue. \n\nMake sure you follow [Contributing Guidelines](https://github.com/CatsInTech/GitHub-ReadMe/blob/main/Contributing.md) 💪🏻\nDon’t forget to ⭐ our [GitHub-ReadMe 📃](https://github.com/CatsInTech/GitHub-ReadMe)\nMaintainers will look into it.`;
+            const { owner, repo } = context.repo;
+
+            await github.issues.createComment({
+              owner: owner,
+              repo: repo,
+              issue_number: issueNumber,
+              body: comment
+            });
+
+            console.log("Comment added to the new issue.");
+
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
