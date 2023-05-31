@@ -23,7 +23,7 @@ jobs:
             const { issue } = context.payload;
             const author = issue.user.login;
             const issueNumber = issue.number;
-            const comment = `Hello @${author}! Thank you for raising this issue. \n\nMake sure you follow [Contributing Guidelines](https://github.com/CatsInTech/GitHub-ReadMe/blob/main/Contributing.md) 💪🏻\nDon’t forget to ⭐ our [GitHub-ReadMe 📃](https://github.com/CatsInTech/GitHub-ReadMe)\nMaintainers will look into it.`;
+            const comment = `Hello @${author}! \n Thank you for raising this issue. \n\nMake sure you follow [Contributing Guidelines.](https://github.com/CatsInTech/GitHub-ReadMe/blob/main/Contributing.md) 💪🏻\nDon’t forget to ⭐ our [GitHub-ReadMe. 📃](https://github.com/CatsInTech/GitHub-ReadMe)\n\n Review team will review the Issue and will reach out to you soon! 😇 \n Thank you for your patience! 😀`;
             const { owner, repo } = context.repo;
 
             await github.issues.createComment({
