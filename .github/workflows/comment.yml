@@ -20,13 +20,17 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const commentAuthor = context.payload.issue.user.login;
-            const commentBody = `Hey @${commentAuthor} ! \n Thank you for raising an issue 💗 \n You can self assign the issue by commenting /assign in comment 😀 \n Make sure you follow [CODE OF CONDUCT](https://github.com/kunjgit/GameZone/blob/main/.github/CODE_OF_CONDUCT.md) and [CONTRIBUTING GUIDELINES](https://github.com/kunjgit/GameZone/blob/main/.github/CONTRIBUTING_GUIDELINE.md) 🚀 \n Don’t Forget to ⭐ our [GameZone🎮](https://github.com/kunjgit/GameZone)\n Make sure you join our [Discord🕹️](https://discord.gg/fgwk4XZfxG) `;
-            const { owner, repo, number } = context.issue;
+            const { issue } = context.payload;
+            const author = issue.user.login;
+            const issueNumber = issue.number;
+            const comment = `Hello @${author}! Thank you for raising this issue. \n\nMake sure you follow [Contributing Guidelines](https://github.com/CatsInTech/GitHub-ReadMe/blob/main/Contributing.md) 💪🏻\nDon’t forget to ⭐ our [GitHub-ReadMe 📃](https://github.com/CatsInTech/GitHub-ReadMe)\nMaintainers will look into it.`;
+            const { owner, repo } = context.repo;
 
             await github.issues.createComment({
               owner: owner,
               repo: repo,
-              issue_number: number,
-              body: commentBody
+              issue_number: issueNumber,
+              body: comment
             });
+
+            console.log("Comment added to the new issue.");
